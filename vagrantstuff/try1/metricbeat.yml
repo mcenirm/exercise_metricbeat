@@ -68,15 +68,28 @@ metricbeat.modules:
 # Configure what outputs to use when sending the data collected by the beat.
 # Multiple outputs may be used.
 
-#-------------------------- Elasticsearch output ------------------------------
-output.elasticsearch:
-  # Array of hosts to connect to.
-  hosts: ["localhost:9200"]
+#------------------------------- File output -----------------------------------
+output.file:
+  # Boolean flag to enable or disable the output module.
+  enabled: true
 
-  # Optional protocol and basic auth credentials.
-  #protocol: "https"
-  #username: "elastic"
-  #password: "changeme"
+  # Path to the directory where to save the generated files. The option is
+  # mandatory.
+  path: "/tmp/metricbeat"
+
+  # Name of the generated files. The default is `metricbeat` and it generates
+  # files: `metricbeat`, `metricbeat.1`, `metricbeat.2`, etc.
+  filename: metricbeat
+
+  # Maximum size in kilobytes of each file. When this size is reached, and on
+  # every metricbeat restart, the files are rotated. The default value is 10240
+  # kB.
+  rotate_every_kb: 10000
+
+  # Maximum number of files under path. When this number of files is reached,
+  # the oldest file is deleted and the rest are shifted from last to first. The
+  # default is 7 files.
+  number_of_files: 7
 
 #----------------------------- Logstash output --------------------------------
 #output.logstash:
